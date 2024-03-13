@@ -1,6 +1,6 @@
 "use strcit"
-
-async function fetchData() {
+import nasdaQdata from './nasdaq_screener.js'
+/* async function fetchData() {
     try {
         const response = await fetch('');
         const data = await response.json();
@@ -11,7 +11,14 @@ async function fetchData() {
     }
 }
 
-fetchData();
-console.log("test");
+fetchData(); */
 
-/* DON*T FORGET TO PRELOAD TICKERS */
+
+let searchInput = document.getElementById("stock-search");
+
+searchInput.addEventListener("input", function() {
+    let searchKey = searchInput.value.trim();
+    console.log(searchKey);
+});
+
+console.log(nasdaQdata.length);
