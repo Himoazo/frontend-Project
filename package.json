@@ -1,0 +1,15 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Hoomam",
+  "license": "ISC",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel --open msedge",
+    "build": "parcel build"
+  },
+  "dependencies": {
+    "parcel": "^2.12.0"
+  }
+}
