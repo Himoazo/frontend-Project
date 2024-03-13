@@ -1,18 +1,5 @@
 "use strcit"
 import nasdaqData from './nasdaq_screener.js'
-/* async function fetchData() {
-    try {
-        const response = await fetch('');
-        const data = await response.json();
-        console.log(data);
-    } catch (error) {
-        console.error('Fetch error:', error);
-        throw error;
-    }
-}
-
-fetchData(); */
-
 
 let searchInput = document.getElementById("stock-search");
 let autoComplete = document.getElementById("autoComplete"); 
@@ -44,14 +31,37 @@ autoComplete.addEventListener('click', function(event) {
 });
 
 // Gör att det går att klicka på/välja en aktie från resultatslistan, tar from Symbl och skickar den med fetchData
-function selectKeyWord(stock){
+function selectKeyWord(stock) {
     searchInput.value = stock.innerHTML;
 
-    const chosenStock = nasdaqData.find((stock)=> stock.Name ===  searchInput.value);
-
-    if(chosenStock){
-        const stockSymbol = chosenStock.Symbol;
-        console.log(stockSymbol);
+    const chosenStock = nasdaqData.find((stock) => stock.Name === searchInput.value);
+    
+    if (chosenStock) {
+        let stockSymbol = chosenStock.Symbol;
+        document.getElementById("search-button").addEventListener("click", function () {
+            if(stockSymbol != ""){
+                fetchData(stockSymbol);
+                stockSymbol = "";
+            }
+        });
     }
     autoComplete.innerHTML = "";
 }
+
+
+
+async function fetchData(stockSymbol) {
+   /*  try {
+        const response = await fetch(``);
+        const data = await response.json();
+        console.log(data);
+        
+    } catch (error) {
+        console.error('Fetch error:', error);
+        throw error;
+    }  */
+    console.log(stockSymbol);  
+    searchInput.value = ""; 
+}
+
+
