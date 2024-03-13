@@ -1,4 +1,4 @@
-const nasdaQdata = [
+const nasdaqData = [
  {
    "Symbol": "A",
    "Name": "Agilent Technologies Inc. Common Stock",
@@ -92756,4 +92756,4 @@ const nasdaQdata = [
  }
 ];
 
-export default nasdaQdata;
+export default nasdaqData;
