@@ -1,7 +1,8 @@
 "use strcit"
-import nasdaqData from './nasdaq_screener.js'
-import testData from './test.js'
-import Chart from 'chart.js/auto'
+import nasdaqData from './nasdaq_screener.js';
+import testData from './test.js';
+import testNews from './testNews.js';
+import Chart from 'chart.js/auto';
 
 let searchInput = document.getElementById("stock-search");
 let autoComplete = document.getElementById("autoComplete"); 
@@ -40,9 +41,11 @@ function selectKeyWord(stock) {
     
     if (chosenStock) {
         let stockSymbol = chosenStock.Symbol;
+        let stockName = chosenStock.Name;
         document.getElementById("search-button").addEventListener("click", function () {
             if(stockSymbol != ""){
-                fetchData(stockSymbol);
+                fetchData(stockSymbol, stockName);
+                fetchNews(stockSymbol)
                 stockSymbol = "";
             }
         });
@@ -52,27 +55,32 @@ function selectKeyWord(stock) {
 
 
 
-/* async function fetchData(stockSymbol) {
+ /*    async function fetchData(stockSymbol, stockName) {
     try {
-        const response = await fetch();
+        const response = await fetch(``);
         const data = await response.json();
-        priceChart(data);
+        priceChart(data, stockName);
         
     } catch (error) {
         console.error('Fetch error:', error);
         throw error;
-    } 
-    console.log(stockSymbol);  
+    }   
     searchInput.value = ""; 
-} */
+} 
+ */
 
-
-priceChart(testData);
-function priceChart(testData){
-const priceHistory = testData.historical;
+priceChart(testData);  //¤¤¤¤¤¤¤¤¤¤¤¤¤¤
+function priceChart(data/* , stockName */){
+const priceHistory = data.historical;
 
 const datesArray = priceHistory.map((row) => row.date);
 const pricesArray = priceHistory.map((row) => row.close);
+
+const existingChart = Chart.getChart('priceChart'); // Get existing chart instance
+
+if (existingChart) {
+    existingChart.destroy(); // Destroy existing chart if it exists
+}
 
 new Chart(document.getElementById('priceChart'), {
     type: 'line',
@@ -80,7 +88,7 @@ new Chart(document.getElementById('priceChart'), {
         labels: datesArray.reverse(),
         datasets: [
             {
-                label: 'Stock',
+                label: `${stockName}`,
                 data: pricesArray.reverse(),
                 borderWidth: 0.1
             },
@@ -114,3 +122,37 @@ new Chart(document.getElementById('priceChart'), {
 });
 }
 
+
+/* async function fetchNews(stockSymbol) {
+    try {
+        const response = await fetch(``);
+        const data = await response.json();
+        stockNews(data);
+        
+    } catch (error) {
+        console.error('Fetch error:', error);
+        throw error;
+    } 
+}  */
+
+stockNews(testNews);
+function stockNews(testNews){
+    let newsDiv = document.getElementById("newsDiv");
+    newsDiv.innerHTML= "";
+    const news = testNews.data;
+    
+    if (news.length === 0) {
+        // No news available
+        newsDiv.innerHTML = "<p>No news available for this stock.</p>";
+    } else {
+        // Display news for each stock
+        for (let stock of news) {
+            newsDiv.innerHTML += `<h2>${stock.title}</h2>`;
+            newsDiv.innerHTML += `<p>${stock.description}</p>`;
+            for (let highlight of stock.entities[0].highlights) {
+                newsDiv.innerHTML += `<p>${highlight.highlight}</p>`;
+            }
+            newsDiv.innerHTML += `<a href="${stock.url}">Läs mer här</a>`;
+        }
+    }
+}
