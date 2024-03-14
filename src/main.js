@@ -47,6 +47,7 @@ const profile = [
 
 let searchInput = document.getElementById("stock-search");
 let autoComplete = document.getElementById("autoComplete"); 
+const errorDiv = document.getElementById("errorMsg"); // div för eventuella errors
 //Matchar den sökta aktien med aktierna i nasdaq
 searchInput.addEventListener("input", function() {
     let result = [];
@@ -105,7 +106,7 @@ function selectKeyWord(stock) {
         
     } catch (error) {
         console.error('Fetch error:', error);
-        throw error;
+        errorDiv.innerHTML = ` Aktiedata är ej tillgänglig: ${error}`
     }   
     searchInput.value = ""; 
 } 
@@ -173,8 +174,10 @@ new Chart(document.getElementById('priceChart'), {
     } catch (error) {
         console.error('Fetch error:', error);
         throw error;
+        errorDiv.innerHTML = ` Företagets profil kan inte visas: ${error}`
     }    
 }  */
+
 
 showProfile(profile);
 function showProfile(profile){
@@ -199,7 +202,7 @@ function showProfile(profile){
         
     } catch (error) {
         console.error('Fetch error:', error);
-        throw error;
+        errorDiv.innerHTML = ` Det gick inte att ladda nyheter: ${error}`
     } 
 }  */
 
