@@ -56,7 +56,7 @@ function selectKeyWord(stock) {
     try {
         const response = await fetch();
         const data = await response.json();
-        console.log(data);
+        priceChart(data);
         
     } catch (error) {
         console.error('Fetch error:', error);
@@ -64,25 +64,24 @@ function selectKeyWord(stock) {
     } 
     console.log(stockSymbol);  
     searchInput.value = ""; 
-}
- */
+} */
 
 
-
+priceChart(testData);
+function priceChart(testData){
 const priceHistory = testData.historical;
 
-// Assuming you've extracted the data into these arrays
 const datesArray = priceHistory.map((row) => row.date);
 const pricesArray = priceHistory.map((row) => row.close);
 
 new Chart(document.getElementById('priceChart'), {
     type: 'line',
     data: {
-        labels: datesArray,
+        labels: datesArray.reverse(),
         datasets: [
             {
                 label: 'Stock',
-                data: pricesArray,
+                data: pricesArray.reverse(),
                 borderWidth: 0.1
             },
         ],
@@ -113,3 +112,5 @@ new Chart(document.getElementById('priceChart'), {
         },
     },
 });
+}
+
