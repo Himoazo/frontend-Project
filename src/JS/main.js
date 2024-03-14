@@ -133,7 +133,8 @@ new Chart(document.getElementById('priceChart'), {
             {
                 /* label: `${stockName}`, */
                 data: pricesArray.reverse(),
-                borderWidth: 0.1
+                borderWidth: 1,
+                pointRadius: 0.2
             },
         ],
     },
@@ -143,7 +144,7 @@ new Chart(document.getElementById('priceChart'), {
           scales: {
             y: {
                 ticks: {
-                    stepSize: 50, 
+                    stepSize: 25, 
                     font: {
                         size: 13,
                         weight: 'bold',
