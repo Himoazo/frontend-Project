@@ -1,0 +1,43 @@
+@use 'base';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    background-image: url('background.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+}
+
+#autoComplete{
+    background-color: beige;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 1rem;
+    padding: 0;
+    max-height: 30vh;
+    overflow-y: scroll;
+    ul{
+        list-style: none;
+        li:hover{
+            background-color: #d6e7fc;
+        }
+    }
+}
+
+.chart{
+    @include base.divStyle;
+}
+#corpProfile, #newsDiv{
+    @include base.divStyle;
+}
+
+.searchBox{
+    width: fit-content;
+    margin: 2vh  auto;
+    
+}
+
+.chart{
+    margin: 0 auto;
+    width: 40%;
+}

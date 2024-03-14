@@ -142,8 +142,12 @@ new Chart(document.getElementById('priceChart'), {
         responsive: true,
         maintainAspectRatio: false,
           scales: {
+            x: {
+                display: false, 
+            },
             y: {
                 ticks: {
+                    display: false,
                     stepSize: 25, 
                     font: {
                         size: 13,
