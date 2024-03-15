@@ -1,20 +1,83 @@
 @use 'base';
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
 body {
     background-image: url('background.jpg');
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.3em;
+    font-size: large;
+    font-weight: 400;
     background-size: cover; 
     background-repeat: no-repeat;
     background-attachment: fixed; 
+}
+
+header{
+    height: 8vh;
+    width: 100%;
+    background-color: beige;
+    text-align: center;
+    h1{
+        padding-top: 1%;
+    }
+}
+
+h2{
+    font-size: 1.5em;
+    max-width: 60ch;
+    margin: 1% auto;
+}
+
+p{
+    max-width: 75ch;
 }
 
 //Sök
 .searchBox{
     width: fit-content;
     margin: 2vh  auto;
-    
+    text-align: center;
+    input{
+        margin: 0 auto;
+        width: 60%;
+    }
 }
 
+#search-button{
+    background-color: #0074D9;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    padding: 2%;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#search-button:hover{
+    background-color: #005ea6;
+}
+
+.search-label {
+    background-color: beige;
+    font-weight: bold; 
+  }
+  #stock-search {
+    padding: 10px;
+    font-size: 1em;
+    background-color: beige;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: none; 
+  }
+
+  #stock-search::placeholder {
+    color: #999;
+  }
 /* Förslagslista */
 #autoComplete{
     background-color: beige;
@@ -40,6 +103,16 @@ body {
 //Företags profil
 .label{
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#corpProfile{
+    p{
+        width: fit-content;
+        margin: 1% auto;
+        text-align: left;
+    }
 }
 
 #corpProfile, #newsDiv{
@@ -51,4 +124,17 @@ body {
 .chart{
     margin: 0 auto;
     width: 40%;
+}
+
+//Footer
+footer{
+    background-color: beige;
+    height: 5vh;
+    padding: 0.5%;
+    font-weight: bold;
+    p{
+        width: fit-content;
+        margin: 0 auto;
+        text-align: center;
+    }
 }

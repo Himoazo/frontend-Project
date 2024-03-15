@@ -230,7 +230,7 @@ function stockNews(testNews){
             newsDiv.innerHTML += `<h2>${stock.title}</h2>`;
             newsDiv.innerHTML += `<p>${stock.description}</p>`;
             for (let highlight of stock.entities[0].highlights) {
-                newsDiv.innerHTML += `<p>${highlight.highlight}</p>`;
+                newsDiv.innerHTML += `<p> <strong>Highlight:</strong> ${highlight.highlight}</p>`;
             }
             newsDiv.innerHTML += `<a href="${stock.url}">Läs mer här</a>`;
         }
