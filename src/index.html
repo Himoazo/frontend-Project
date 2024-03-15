@@ -15,9 +15,14 @@
     <main>
     <div class="searchBox">
         <label for="stock-search" class="search-label">Search a stock by company name:</label>
+        <span>
+        <button id="clearBtn">Clear</button>
         <input type="text" id="stock-search" placeholder="Search a stock by company name" autocomplete="off">
         <button id="search-button">Search</button>
+        
+        </span>
     </div>
+    
     <div id="autoComplete"></div>
 
     <div class="chart"><canvas id="priceChart"></canvas></div>

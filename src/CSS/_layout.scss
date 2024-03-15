@@ -38,9 +38,16 @@ p{
 
 //Sök
 .searchBox{
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
     width: fit-content;
     margin: 2vh  auto;
     text-align: center;
+    span{
+        display: flex;
+        flex-direction: row;
+    }
     input{
         margin: 0 auto;
         width: 60%;
@@ -56,6 +63,15 @@ p{
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+#clearBtn {
+    /* position: absolute; 
+    top: 50%;
+    right: 4%;  */
+   bottom: 0;
+   right: 0;
+    
 }
 
 #search-button:hover{

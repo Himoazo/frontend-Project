@@ -4,6 +4,7 @@ import testData from './test.js';
 import testNews from './testNews.js';
 import Chart from 'chart.js/auto';
 
+
 const profile = [
     {
       "symbol": "AAPL",
@@ -48,6 +49,9 @@ const profile = [
 let searchInput = document.getElementById("stock-search"); //input
 let autoComplete = document.getElementById("autoComplete"); 
 const errorDiv = document.getElementById("errorMsg"); // div för eventuella errors
+const searchText = document.getElementById("stock-search");
+const clearButton = document.getElementById("clearBtn");
+window.onload = clear;
 
 //Matchar den sökta aktien med aktierna i nasdaq
 searchInput.addEventListener("input", function() {
@@ -236,3 +240,30 @@ function stockNews(testNews){
         }
     }
 }
+
+
+function clear(){
+    searchText.addEventListener("input", showClearBtn);
+    clearButton.addEventListener("click", clearInput);
+  }
+
+showClearBtn();
+function showClearBtn() {
+    
+
+    if (searchText.value) {
+      clearButton.style.display = 'block';
+    } else {
+      clearButton.style.display = 'none';
+    }
+  }
+  
+  function clearInput() {
+    const searchText = document.getElementById("stock-search");
+    searchText.value = '';
+    autoComplete.innerHTML = "";
+    showClearBtn();
+  }
+
+  
+  
