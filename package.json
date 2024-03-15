@@ -9,6 +9,7 @@
     "start": "parcel --open msedge",
     "build": "parcel build"
   },
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "dependencies": {
     "chart.js": "^4.4.2",
     "parcel": "^2.12.0"

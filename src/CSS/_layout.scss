@@ -8,6 +8,14 @@ body {
     background-attachment: fixed; 
 }
 
+//Sök
+.searchBox{
+    width: fit-content;
+    margin: 2vh  auto;
+    
+}
+
+/* Förslagslista */
 #autoComplete{
     background-color: beige;
     width: fit-content;
@@ -24,19 +32,22 @@ body {
     }
 }
 
+/* Diagram */
 .chart{
     @include base.divStyle;
 }
+
+//Företags profil
+.label{
+    font-weight: bold;
+}
+
 #corpProfile, #newsDiv{
     @include base.divStyle;
 }
 
-.searchBox{
-    width: fit-content;
-    margin: 2vh  auto;
-    
-}
 
+//Diagram
 .chart{
     margin: 0 auto;
     width: 40%;

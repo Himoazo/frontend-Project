@@ -45,9 +45,10 @@ const profile = [
     }
   ]; 
 
-let searchInput = document.getElementById("stock-search");
+let searchInput = document.getElementById("stock-search"); //input
 let autoComplete = document.getElementById("autoComplete"); 
 const errorDiv = document.getElementById("errorMsg"); // div för eventuella errors
+
 //Matchar den sökta aktien med aktierna i nasdaq
 searchInput.addEventListener("input", function() {
     let result = [];
@@ -78,7 +79,6 @@ autoComplete.addEventListener('click', function(event) {
 // Gör att det går att klicka på/välja en aktie från resultatslistan, tar from Symbl och skickar den med fetchData
 function selectKeyWord(stock) {
     searchInput.value = stock.innerHTML;
-
     const chosenStock = nasdaqData.find((stock) => stock.Name === searchInput.value);
     
     if (chosenStock) {
@@ -97,7 +97,7 @@ function selectKeyWord(stock) {
 }
 
 
-
+// Anrop till API som hämtar akite historiskapriser
  /*    async function fetchData(stockSymbol, stockName) {
     try {
         const response = await fetch(``);
@@ -113,16 +113,17 @@ function selectKeyWord(stock) {
  */
 
 priceChart(testData);  //¤¤¤¤¤¤¤¤¤¤¤¤¤¤
+// Chart.js aktie diagram
 function priceChart(data/* , stockName */){
 const priceHistory = data.historical;
 
 const datesArray = priceHistory.map((row) => row.date);
 const pricesArray = priceHistory.map((row) => row.close);
 
-const existingChart = Chart.getChart('priceChart'); // Get existing chart instance
-
+//Kontroll vid ett nytt anrop tar bort befintligt diagram för att visa ett nytt 
+const existingChart = Chart.getChart('priceChart'); 
 if (existingChart) {
-    existingChart.destroy(); // Destroy existing chart if it exists
+    existingChart.destroy(); 
 }
 
 new Chart(document.getElementById('priceChart'), {
@@ -170,6 +171,7 @@ new Chart(document.getElementById('priceChart'), {
 });
 }
 
+//Anrop till företags profil API
 /* async function fetchProfile(stockSymbol) {
     try {
         const response = await fetch();
@@ -185,20 +187,21 @@ new Chart(document.getElementById('priceChart'), {
 
 
 showProfile(profile);
+// Skriver ut profile detaljer til DOM
 function showProfile(profile){
    const profileDiv = document.getElementById("corpProfile");
    profileDiv.innerHTML = "";
    for(let item of profile){
-    profileDiv.innerHTML += `<p> Symbol: ${item.symbol}</p>`;
-    profileDiv.innerHTML += `<p> Price: ${item.price} $</p>`;
-    profileDiv.innerHTML += `<p> Industry: ${item.industry}</p>`;
-    profileDiv.innerHTML += `<p> Market Cap: ${item.mktCap} $</p>`;
-    profileDiv.innerHTML += `<p> CEO: ${item.ceo}</p>`;
-    profileDiv.innerHTML += `<p> Description: ${item.description}</p>`;
-    
+    profileDiv.innerHTML += `<p> <span class="label">Symbol:</span> ${item.symbol}</p>`;
+    profileDiv.innerHTML += `<p> <span class="label">Price:</span> ${item.price} $</p>`;
+    profileDiv.innerHTML += `<p> <span class="label">Industry:</span> ${item.industry}</p>`;
+    profileDiv.innerHTML += `<p> <span class="label">Market Cap:</span> ${item.mktCap} $</p>`;
+    profileDiv.innerHTML += `<p> <span class="label">CEO:</span> ${item.ceo}</p>`;
+    profileDiv.innerHTML += `<p> <span class="label">Description:</span> ${item.description}</p>`;
    }
 }
 
+// Anrop till aktienyheters API
 /* async function fetchNews(stockSymbol) {
     try {
         const response = await fetch(``);
@@ -212,6 +215,7 @@ function showProfile(profile){
 }  */
 
 stockNews(testNews);
+// Skriver ut aktienyheter till DOM
 function stockNews(testNews){
     let newsDiv = document.getElementById("newsDiv");
     newsDiv.innerHTML= "";
