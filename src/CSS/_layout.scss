@@ -19,7 +19,7 @@ body {
 header{
     height: 8vh;
     width: 100%;
-    background-color: beige;
+    background-color:  darken(base.$mainColor, 15%);
     text-align: center;
     h1{
         padding-top: 1%;
@@ -38,7 +38,6 @@ p{
 
 //Sök
 .searchBox{
-    /* position: relative; */
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -50,7 +49,7 @@ p{
     }
     input{
         margin: 0 auto;
-        width: 60%;
+        width: 70%;
     }
 }
 
@@ -79,13 +78,13 @@ p{
 }
 
 .search-label {
-    background-color: beige;
+    background-color: base.$mainColor;
     font-weight: bold; 
   }
   #stock-search {
     padding: 10px;
     font-size: 1em;
-    background-color: beige;
+    background-color: base.$mainColor;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: none; 
@@ -96,7 +95,7 @@ p{
   }
 /* Förslagslista */
 #autoComplete{
-    background-color: beige;
+    background-color: base.$mainColor;
     width: fit-content;
     margin: 0 auto;
     border-radius: 1rem;
@@ -144,7 +143,7 @@ p{
 
 //Footer
 footer{
-    background-color: beige;
+    background-color: darken(base.$mainColor, 15%);
     height: 5vh;
     padding: 0.5%;
     font-weight: bold;

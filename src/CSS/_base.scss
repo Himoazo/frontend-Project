@@ -1,5 +1,7 @@
+$mainColor: rgb(245, 245, 240);
+
 @mixin divStyle {
-    background-color: beige;
+    background-color: $mainColor;
     width: fit-content;
     max-width: 90%;
     margin: 1% auto;
