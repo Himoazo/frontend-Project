@@ -47,7 +47,7 @@ import Chart from 'chart.js/auto';
   ];  */
 //Roterande logga
 window.addEventListener('scroll', () => {
-    document.body.style.setProperty('--scroll', window.pageYOffset / (document.body.offsetHeight - window.innerHeight))
+    document.body.style.setProperty('--scroll', window.scrollY  / (document.body.offsetHeight - window.innerHeight))
 });
 
 let searchInput = document.getElementById("stock-search"); //input
@@ -115,7 +115,7 @@ function selectKeyWord(stock) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/${stockSymbol}?apikey=f58d5de976d0e1bdf217ed18c4a5bef8`);
+        const response = await fetch();
         const data = await response.json();
         priceChart(data, stockName);
         
@@ -206,7 +206,7 @@ async function fetchProfile(stockSymbol) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch(`https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=f58d5de976d0e1bdf217ed18c4a5bef8`);
+        const response = await fetch();
         const data = await response.json();
         showProfile(data);
         
@@ -246,7 +246,7 @@ async function fetchNews(stockSymbol) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch(`https://api.stockdata.org/v1/news/all?symbols=${stockSymbol}&filter_entities=true&language=en&api_token=PydFXZxmHPYPv8w15MosWrlpJkwwt1p7wRPtTDoO`);
+        const response = await fetch();
         const data = await response.json();
         stockNews(data);
         
@@ -287,7 +287,7 @@ function stockNews(testNews){
     }
 }
 
-
+//Funktioner som visar clear knappen vid input och får den att rensa input vid click
 function clear(){
     searchInput.addEventListener("input", showClearBtn);
     clearButton.addEventListener("click", clearInput);
@@ -295,8 +295,6 @@ function clear(){
 
 showClearBtn();
 function showClearBtn() {
-    
-
     if (searchInput.value) {
       clearButton.style.display = 'block';
     } else {
