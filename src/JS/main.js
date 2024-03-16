@@ -45,11 +45,15 @@ import Chart from 'chart.js/auto';
       "isFund": false
     }
   ];  */
+//Roterande logga
+window.addEventListener('scroll', () => {
+    document.body.style.setProperty('--scroll', window.pageYOffset / (document.body.offsetHeight - window.innerHeight))
+});
 
 let searchInput = document.getElementById("stock-search"); //input
 let autoComplete = document.getElementById("autoComplete"); 
 const errorDiv = document.getElementById("errorMsg"); // div för eventuella errors
-const searchText = document.getElementById("stock-search");
+// const searchText = document.getElementById("stock-search");
 const clearButton = document.getElementById("clearBtn");
 
 
@@ -111,12 +115,13 @@ function selectKeyWord(stock) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch(/* `https://financialmodelingprep.com/api/v3/historical-price-full/${stockSymbol}?apikey=f58d5de976d0e1bdf217ed18c4a5bef8` */);
+        const response = await fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/${stockSymbol}?apikey=f58d5de976d0e1bdf217ed18c4a5bef8`);
         const data = await response.json();
         priceChart(data, stockName);
         
     } catch (error) {
         console.error('Fetch error:', error);
+        errorDiv.style.display = 'block';
         errorDiv.innerHTML = ` Aktiedata är ej tillgänglig: ${error}`
     } finally{
         const loader = document.getElementsByClassName("loading");
@@ -129,11 +134,12 @@ function selectKeyWord(stock) {
     }  
     
 } 
- 
+
 
 /* priceChart(testData); */  //¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 // Chart.js aktie diagram
 function priceChart(data, stockName){
+document.querySelector(".chart").style.display = 'block';
 const priceHistory = data.historical;
 
 const datesArray = priceHistory.map((row) => row.date);
@@ -200,13 +206,13 @@ async function fetchProfile(stockSymbol) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch(/* `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=f58d5de976d0e1bdf217ed18c4a5bef8` */);
+        const response = await fetch(`https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=f58d5de976d0e1bdf217ed18c4a5bef8`);
         const data = await response.json();
         showProfile(data);
         
     } catch (error) {
         console.error('Fetch error:', error);
-        /* throw error; */
+        errorDiv.style.display = 'block';
         errorDiv.innerHTML = ` Företagets profil kan inte visas: ${error}`
     }    finally{
         const loader = document.getElementsByClassName("loading");
@@ -223,6 +229,7 @@ async function fetchProfile(stockSymbol) {
 // Skriver ut profile detaljer til DOM
 function showProfile(profile){
    const profileDiv = document.getElementById("corpProfile");
+   profileDiv.style.display = 'block';
    profileDiv.innerHTML = "";
    for(let item of profile){
     profileDiv.innerHTML += `<p> <span class="label">Symbol:</span> ${item.symbol}</p>`;
@@ -239,12 +246,13 @@ async function fetchNews(stockSymbol) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch(/* `https://api.stockdata.org/v1/news/all?symbols=${stockSymbol}&filter_entities=true&language=en&api_token=PydFXZxmHPYPv8w15MosWrlpJkwwt1p7wRPtTDoO` */);
+        const response = await fetch(`https://api.stockdata.org/v1/news/all?symbols=${stockSymbol}&filter_entities=true&language=en&api_token=PydFXZxmHPYPv8w15MosWrlpJkwwt1p7wRPtTDoO`);
         const data = await response.json();
         stockNews(data);
         
     } catch (error) {
         console.error('Fetch error:', error);
+        errorDiv.style.display = 'block';
         errorDiv.innerHTML = ` Det gick inte att ladda nyheter: ${error}`
     } finally{
         activeFetches--;
@@ -259,6 +267,7 @@ async function fetchNews(stockSymbol) {
 // Skriver ut aktienyheter till DOM
 function stockNews(testNews){
     let newsDiv = document.getElementById("newsDiv");
+    newsDiv.style.display = 'block';
     newsDiv.innerHTML= "";
     const news = testNews.data;
     
@@ -280,7 +289,7 @@ function stockNews(testNews){
 
 
 function clear(){
-    searchText.addEventListener("input", showClearBtn);
+    searchInput.addEventListener("input", showClearBtn);
     clearButton.addEventListener("click", clearInput);
   }
 
@@ -288,7 +297,7 @@ showClearBtn();
 function showClearBtn() {
     
 
-    if (searchText.value) {
+    if (searchInput.value) {
       clearButton.style.display = 'block';
     } else {
       clearButton.style.display = 'none';
@@ -296,11 +305,12 @@ function showClearBtn() {
   }
   
   function clearInput() {
-    const searchText = document.getElementById("stock-search");
-    searchText.value = '';
+    const searchInput = document.getElementById("stock-search");
+    searchInput.value = '';
     autoComplete.innerHTML = "";
     showClearBtn();
   }
 
   
   
+

@@ -1,5 +1,7 @@
+// Huvudfärg
 $mainColor: rgb(245, 245, 240);
 
+//Div design
 @mixin divStyle {
     background-color: $mainColor;
     width: fit-content;

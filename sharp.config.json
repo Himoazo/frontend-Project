@@ -1,0 +1,15 @@
+{
+    "avif": {
+      "quality": 50,
+      "chromaSubsampling": "4:4:4"
+    },
+    "webp": {
+      "quality": 65,
+      "chromaSubsampling": "4:2:0"
+    },
+    "png": {
+        "quality": 75,
+        "chromaSubsampling": "4:4:4"
+      }
+  }
+  

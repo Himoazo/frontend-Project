@@ -1,6 +1,4 @@
 
-
-
 /* Spinner */ 
 $spinner: rgb(81, 183, 246);
 $background: rgb(245, 245, 240);
@@ -46,4 +44,20 @@ $size: 20vw;
 @keyframes loading {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+//Roterande logga
+#logo {
+	animation: rotate 2s linear infinite;
+	animation-play-state: paused;
+	animation-delay: calc(var(--scroll) * -1s);
+	animation-iteration-count: 1;
+	animation-fill-mode: both;
+}
+
+@keyframes  rotate {
+	to {
+		transform: rotate(360deg);
+	}
 }

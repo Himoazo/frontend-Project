@@ -4,9 +4,15 @@
     margin: 0;
     padding: 0;
   }
+
+#logo{
+    position: fixed;
+    width: fit-content;
+}
   
 body {
     background-image: url('background.jpg');
+    min-height: 100vh;
     font-family: 'Roboto', sans-serif;
     line-height: 1.3em;
     font-size: large;
@@ -24,6 +30,10 @@ header{
     h1{
         padding-top: 1%;
     }
+}
+
+main{
+    height: 100vh;
 }
 
 h2{
@@ -65,7 +75,11 @@ p{
 }
 
 #clearBtn {
-    
+    @extend #search-button; 
+    background-color: #575352; 
+    &:hover {
+        background-color: white; 
+    }
 }
 
 #search-button:hover{
@@ -106,13 +120,17 @@ p{
         list-style: none;
         li:hover{
             background-color: #d6e7fc;
+            cursor: pointer;
         }
     }
 }
 
 /* Diagram */
 .chart{
+    display: none;
     @include base.divStyle;
+    margin: 0 auto;
+    width: 40%;
 }
 
 //Företags profil
@@ -123,6 +141,7 @@ p{
     align-items: center;
 }
 #corpProfile{
+    
     p{
         width: fit-content;
         margin: 1% auto;
@@ -131,15 +150,24 @@ p{
 }
 
 #corpProfile, #newsDiv{
+    display: none;
     @include base.divStyle;
 }
 
 
-//Diagram
-.chart{
-    margin: 0 auto;
-    width: 40%;
+// Error div
+#errorMsg{
+    display: none;
+    text-align: center;
+    color: black;
+    line-height: 1.3em;
+    font-size: 2em;
+    font-weight: 700;
+    background-color: #ffcccc;
+    padding: 1%;
 }
+
+
 
 //Footer
 footer{
@@ -147,12 +175,20 @@ footer{
     height: 5vh;
     padding: 0.5%;
     font-weight: bold;
-    position: absolute;
+    position: relative;
     bottom: 0;
-    width: 100%;
+    width: 99%;
     p{
         width: fit-content;
         margin: 0 auto;
         text-align: center;
     }
 }
+
+//Media queries
+@media screen and (max-width: 800px) {
+    #logo{
+        display: none;
+    }
+}
+
