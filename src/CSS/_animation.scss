@@ -1,0 +1,49 @@
+
+
+
+/* Spinner */ 
+$spinner: rgb(81, 183, 246);
+$background: rgb(245, 245, 240);
+$size: 20vw;
+
+
+
+.loading {
+  display: none;  
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: $size;
+  height: $size;
+  animation: loading 0.75s linear infinite;
+
+  span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  
+  .loadingSpan1 {
+    background: linear-gradient(to right, rgba($spinner,0) 0%,rgba($spinner,0) 50%,$spinner 51%);
+  }
+  
+  .loadingSpan2 {
+    background: linear-gradient(to top, rgba($background,0) 0%,$background 100%);
+  }
+  
+  .loadingSpan3 {
+    $offset: $size * 0.1;
+    top: $offset;
+    left: $offset;
+    width: $size - ($offset * 2);
+    height: $size - ($offset * 2);
+    background: $background;
+  }
+}
+
+@keyframes loading {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

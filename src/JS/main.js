@@ -1,11 +1,11 @@
 "use strcit"
 import nasdaqData from './nasdaq_screener.js';
-import testData from './test.js';
-import testNews from './testNews.js';
+/* import testData from './test.js';
+import testNews from './testNews.js'; */
 import Chart from 'chart.js/auto';
 
 
-const profile = [
+/* const profile = [
     {
       "symbol": "AAPL",
       "price": 174.005,
@@ -44,13 +44,16 @@ const profile = [
       "isAdr": false,
       "isFund": false
     }
-  ]; 
+  ];  */
 
 let searchInput = document.getElementById("stock-search"); //input
 let autoComplete = document.getElementById("autoComplete"); 
 const errorDiv = document.getElementById("errorMsg"); // div för eventuella errors
 const searchText = document.getElementById("stock-search");
 const clearButton = document.getElementById("clearBtn");
+
+
+let activeFetches = 0;
 window.onload = clear;
 
 //Matchar den sökta aktien med aktierna i nasdaq
@@ -73,7 +76,7 @@ function showSuggestions(result) {
     });
     autoComplete.innerHTML = `<ul>${content}</ul>`;
 }
-
+//Lägger eventlistener på den skapade li
 autoComplete.addEventListener('click', function(event) {
     if (event.target.tagName === 'LI') {
         selectKeyWord(event.target);
@@ -89,10 +92,12 @@ function selectKeyWord(stock) {
         let stockSymbol = chosenStock.Symbol;
         let stockName = chosenStock.Name;
         document.getElementById("search-button").addEventListener("click", function () {
+            document.querySelector(".loading").style.display = 'block';
+
             if(stockSymbol != ""){
-                /* fetchData(stockSymbol, stockName);
+                fetchData(stockSymbol, stockName);
                 fetchNews(stockSymbol) 
-                fetchProfile(stockSymbol)*/
+                fetchProfile(stockSymbol)
                 stockSymbol = "";
             }
         });
@@ -102,23 +107,33 @@ function selectKeyWord(stock) {
 
 
 // Anrop till API som hämtar akite historiskapriser
- /*    async function fetchData(stockSymbol, stockName) {
+    async function fetchData(stockSymbol, stockName) {
     try {
-        const response = await fetch(``);
+        activeFetches++;
+        await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
+        const response = await fetch(/* `https://financialmodelingprep.com/api/v3/historical-price-full/${stockSymbol}?apikey=f58d5de976d0e1bdf217ed18c4a5bef8` */);
         const data = await response.json();
         priceChart(data, stockName);
         
     } catch (error) {
         console.error('Fetch error:', error);
         errorDiv.innerHTML = ` Aktiedata är ej tillgänglig: ${error}`
-    }   
-    searchInput.value = ""; 
+    } finally{
+        const loader = document.getElementsByClassName("loading");
+        activeFetches--;
+        if (activeFetches === 0) {
+            const loader = document.querySelector(".loading");
+            loader.style.display = 'none';
+        }
+        searchInput.value = ""; 
+    }  
+    
 } 
- */
+ 
 
-priceChart(testData);  //¤¤¤¤¤¤¤¤¤¤¤¤¤¤
+/* priceChart(testData); */  //¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 // Chart.js aktie diagram
-function priceChart(data/* , stockName */){
+function priceChart(data, stockName){
 const priceHistory = data.historical;
 
 const datesArray = priceHistory.map((row) => row.date);
@@ -136,7 +151,7 @@ new Chart(document.getElementById('priceChart'), {
         labels: datesArray.reverse(),
         datasets: [
             {
-                /* label: `${stockName}`, */
+                label: `${stockName}`,
                 data: pricesArray.reverse(),
                 borderWidth: 1,
                 pointRadius: 0.2
@@ -152,7 +167,7 @@ new Chart(document.getElementById('priceChart'), {
             },
             y: {
                 ticks: {
-                    display: false,
+                    display: true,
                     stepSize: 25, 
                     font: {
                         size: 13,
@@ -160,6 +175,9 @@ new Chart(document.getElementById('priceChart'), {
                     },
                 },
             },
+        },
+        interaction: {
+            intersect: false, // för interpolation
         },
         plugins: {
             legend: {
@@ -175,22 +193,33 @@ new Chart(document.getElementById('priceChart'), {
 });
 }
 
+
+
 //Anrop till företags profil API
-/* async function fetchProfile(stockSymbol) {
+async function fetchProfile(stockSymbol) {
     try {
-        const response = await fetch();
+        activeFetches++;
+        await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
+        const response = await fetch(/* `https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=f58d5de976d0e1bdf217ed18c4a5bef8` */);
         const data = await response.json();
         showProfile(data);
         
     } catch (error) {
         console.error('Fetch error:', error);
-        throw error;
+        /* throw error; */
         errorDiv.innerHTML = ` Företagets profil kan inte visas: ${error}`
-    }    
-}  */
+    }    finally{
+        const loader = document.getElementsByClassName("loading");
+        activeFetches--;
+        if (activeFetches === 0) {
+            const loader = document.querySelector(".loading");
+            loader.style.display = 'none';
+        }
+    } 
+} 
 
 
-showProfile(profile);
+/* showProfile(profile); */
 // Skriver ut profile detaljer til DOM
 function showProfile(profile){
    const profileDiv = document.getElementById("corpProfile");
@@ -206,19 +235,27 @@ function showProfile(profile){
 }
 
 // Anrop till aktienyheters API
-/* async function fetchNews(stockSymbol) {
+async function fetchNews(stockSymbol) {
     try {
-        const response = await fetch(``);
+        activeFetches++;
+        await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
+        const response = await fetch(/* `https://api.stockdata.org/v1/news/all?symbols=${stockSymbol}&filter_entities=true&language=en&api_token=PydFXZxmHPYPv8w15MosWrlpJkwwt1p7wRPtTDoO` */);
         const data = await response.json();
         stockNews(data);
         
     } catch (error) {
         console.error('Fetch error:', error);
         errorDiv.innerHTML = ` Det gick inte att ladda nyheter: ${error}`
+    } finally{
+        activeFetches--;
+        if (activeFetches === 0) {
+            const loader = document.querySelector(".loading");
+            loader.style.display = 'none';
+        }
     } 
-}  */
+} 
 
-stockNews(testNews);
+/* stockNews(testNews); */
 // Skriver ut aktienyheter till DOM
 function stockNews(testNews){
     let newsDiv = document.getElementById("newsDiv");
