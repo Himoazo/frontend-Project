@@ -1,9 +1,10 @@
 "use strcit"
+require('dotenv').config();
 import nasdaqData from './nasdaq_screener.js';
 /* import testData from './test.js';
 import testNews from './testNews.js'; */
 import Chart from 'chart.js/auto';
-
+console.log(process.env);
 
 /* const profile = [
     {
@@ -111,11 +112,12 @@ function selectKeyWord(stock) {
 
 
 // Anrop till API som hämtar akite historiskapriser
+    const priceAPI = process.env.API_KEY;  //Environment key
     async function fetchData(stockSymbol, stockName) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch();
+        const response = await fetch(`https://financialmodelingprep.com/api/v3/historical-price-full/${stockSymbol}?apikey=${priceAPI}`);
         const data = await response.json();
         priceChart(data, stockName);
         
@@ -202,11 +204,12 @@ new Chart(document.getElementById('priceChart'), {
 
 
 //Anrop till företags profil API
+const APIPRICE = process.env.API_KEY; 
 async function fetchProfile(stockSymbol) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch();
+        const response = await fetch(`https://financialmodelingprep.com/api/v3/profile/${stockSymbol}?apikey=${APIPRICE}`);
         const data = await response.json();
         showProfile(data);
         
@@ -242,11 +245,12 @@ function showProfile(profile){
 }
 
 // Anrop till aktienyheters API
+const newsAPI = process.env.NEWS_KEY; 
 async function fetchNews(stockSymbol) {
     try {
         activeFetches++;
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 skund väntetid bara för att visa annimation
-        const response = await fetch();
+        const response = await fetch(`https://api.stockdata.org/v1/news/all?symbols=${stockSymbol}&filter_entities=true&language=en&api_token=${newsAPI}`);
         const data = await response.json();
         stockNews(data);
         
