@@ -4,7 +4,7 @@ import nasdaqData from './nasdaq_screener.js';
 /* import testData from './test.js';
 import testNews from './testNews.js'; */
 import Chart from 'chart.js/auto';
-console.log(process.env);
+
 
 /* const profile = [
     {
