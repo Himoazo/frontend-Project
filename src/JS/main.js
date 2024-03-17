@@ -1,67 +1,23 @@
 "use strcit"
 require('dotenv').config();
 import nasdaqData from './nasdaq_screener.js';
-/* import testData from './test.js';
-import testNews from './testNews.js'; */
 import Chart from 'chart.js/auto';
 
 
-/* const profile = [
-    {
-      "symbol": "AAPL",
-      "price": 174.005,
-      "beta": 1.289,
-      "volAvg": 58368390,
-      "mktCap": 2686967809500,
-      "lastDiv": 0.96,
-      "range": "151.64-199.62",
-      "changes": 2.875,
-      "companyName": "Apple Inc.",
-      "currency": "USD",
-      "cik": "0000320193",
-      "isin": "US0378331005",
-      "cusip": "037833100",
-      "exchange": "NASDAQ Global Select",
-      "exchangeShortName": "NASDAQ",
-      "industry": "Consumer Electronics",
-      "website": "https://www.apple.com",
-      "description": "Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories worldwide. The company offers iPhone, a line of smartphones; Mac, a line of personal computers; iPad, a line of multi-purpose tablets; and wearables, home, and accessories comprising AirPods, Apple TV, Apple Watch, Beats products, and HomePod. It also provides AppleCare support and cloud services; and operates various platforms, including the App Store that allow customers to discover and download applications and digital content, such as books, music, video, games, and podcasts. In addition, the company offers various services, such as Apple Arcade, a game subscription service; Apple Fitness+, a personalized fitness service; Apple Music, which offers users a curated listening experience with on-demand radio stations; Apple News+, a subscription news and magazine service; Apple TV+, which offers exclusive original content; Apple Card, a co-branded credit card; and Apple Pay, a cashless payment service, as well as licenses its intellectual property. The company serves consumers, and small and mid-sized businesses; and the education, enterprise, and government markets. It distributes third-party applications for its products through the App Store. The company also sells its products through its retail and online stores, and direct sales force; and third-party cellular network carriers, wholesalers, retailers, and resellers. Apple Inc. was incorporated in 1977 and is headquartered in Cupertino, California.",
-      "ceo": "Mr. Timothy D. Cook",
-      "sector": "Technology",
-      "country": "US",
-      "fullTimeEmployees": "161000",
-      "phone": "408 996 1010",
-      "address": "One Apple Park Way",
-      "city": "Cupertino",
-      "state": "CA",
-      "zip": "95014",
-      "dcfDiff": 31.28305,
-      "dcf": 139.84694950805735,
-      "image": "https://financialmodelingprep.com/image-stock/AAPL.png",
-      "ipoDate": "1980-12-12",
-      "defaultImage": false,
-      "isEtf": false,
-      "isActivelyTrading": true,
-      "isAdr": false,
-      "isFund": false
-    }
-  ];  */
 //Roterande logga
 window.addEventListener('scroll', () => {
     document.body.style.setProperty('--scroll', window.scrollY  / (document.body.offsetHeight - window.innerHeight))
 });
 
 let searchInput = document.getElementById("stock-search"); //input
-let autoComplete = document.getElementById("autoComplete"); 
+let autoComplete = document.getElementById("autoComplete"); // Förslags div
 const errorDiv = document.getElementById("errorMsg"); // div för eventuella errors
-// const searchText = document.getElementById("stock-search");
-const clearButton = document.getElementById("clearBtn");
+const clearButton = document.getElementById("clearBtn"); //Rensa knappen
 
+let activeFetches = 0; // för loader spinner
+window.onload = clear; 
 
-let activeFetches = 0;
-window.onload = clear;
-
-//Matchar den sökta aktien med aktierna i nasdaq
+//Matchar den sökta aktien med aktierna i Nasdaq
 searchInput.addEventListener("input", function() {
     let result = [];
     let searchKey = searchInput.value.trim();
@@ -110,9 +66,8 @@ function selectKeyWord(stock) {
     autoComplete.innerHTML = "";
 }
 
-
-// Anrop till API som hämtar akite historiskapriser
-    const priceAPI = process.env.API_KEY;  //Environment key
+    const priceAPI = process.env.API_KEY;  //Environment variable
+    // Anrop till API som hämtar akite historiskapriser
     async function fetchData(stockSymbol, stockName) {
     try {
         activeFetches++;
@@ -126,7 +81,7 @@ function selectKeyWord(stock) {
         errorDiv.style.display = 'block';
         errorDiv.innerHTML = ` Aktiedata är ej tillgänglig: ${error}`
     } finally{
-        const loader = document.getElementsByClassName("loading");
+        // hanterar loading spinner
         activeFetches--;
         if (activeFetches === 0) {
             const loader = document.querySelector(".loading");
@@ -138,14 +93,13 @@ function selectKeyWord(stock) {
 } 
 
 
-/* priceChart(testData); */  //¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 // Chart.js aktie diagram
 function priceChart(data, stockName){
 document.querySelector(".chart").style.display = 'block';
 const priceHistory = data.historical;
 
-const datesArray = priceHistory.map((row) => row.date);
-const pricesArray = priceHistory.map((row) => row.close);
+const datesArray = priceHistory.map((row) => row.date); //datum var
+const pricesArray = priceHistory.map((row) => row.close); //pris var
 
 //Kontroll vid ett nytt anrop tar bort befintligt diagram för att visa ett nytt 
 const existingChart = Chart.getChart('priceChart'); 
@@ -176,7 +130,7 @@ new Chart(document.getElementById('priceChart'), {
             y: {
                 ticks: {
                     display: true,
-                    stepSize: 25, 
+                    stepSize: 25, // prisintervall
                     font: {
                         size: 13,
                         weight: 'bold',
@@ -204,7 +158,7 @@ new Chart(document.getElementById('priceChart'), {
 
 
 //Anrop till företags profil API
-const APIPRICE = process.env.API_KEY; 
+const APIPRICE = process.env.API_KEY; //.env
 async function fetchProfile(stockSymbol) {
     try {
         activeFetches++;
@@ -218,7 +172,6 @@ async function fetchProfile(stockSymbol) {
         errorDiv.style.display = 'block';
         errorDiv.innerHTML = ` Företagets profil kan inte visas: ${error}`
     }    finally{
-        const loader = document.getElementsByClassName("loading");
         activeFetches--;
         if (activeFetches === 0) {
             const loader = document.querySelector(".loading");
@@ -228,7 +181,6 @@ async function fetchProfile(stockSymbol) {
 } 
 
 
-/* showProfile(profile); */
 // Skriver ut profile detaljer til DOM
 function showProfile(profile){
    const profileDiv = document.getElementById("corpProfile");
@@ -267,7 +219,6 @@ async function fetchNews(stockSymbol) {
     } 
 } 
 
-/* stockNews(testNews); */
 // Skriver ut aktienyheter till DOM
 function stockNews(testNews){
     let newsDiv = document.getElementById("newsDiv");
@@ -276,10 +227,10 @@ function stockNews(testNews){
     const news = testNews.data;
     
     if (news.length === 0) {
-        // No news available
+        // Kollar om det inte finns nyheter
         newsDiv.innerHTML = "<p>No news available for this stock.</p>";
     } else {
-        // Display news for each stock
+        // printar nyheterna för aktien
         for (let stock of news) {
             newsDiv.innerHTML += `<h2>${stock.title}</h2>`;
             newsDiv.innerHTML += `<p>${stock.description}</p>`;
@@ -296,7 +247,7 @@ function clear(){
     searchInput.addEventListener("input", showClearBtn);
     clearButton.addEventListener("click", clearInput);
   }
-
+//visar Clear när user börjar skriva
 showClearBtn();
 function showClearBtn() {
     if (searchInput.value) {

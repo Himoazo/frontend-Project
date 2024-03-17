@@ -8,6 +8,7 @@
 #logo{
     position: fixed;
     width: fit-content;
+    z-index: -10;
 }
   
 body {
@@ -173,7 +174,7 @@ p{
 //Footer
 footer{
     background-color: darken(base.$mainColor, 15%);
-    margin-top: auto;
+    margin-top: 100vh;
     height: 5vh;
     padding: 0.5%;
     font-weight: bold;
