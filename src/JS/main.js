@@ -15,7 +15,7 @@ const errorDiv = document.getElementById("errorMsg"); // div för eventuella err
 const clearButton = document.getElementById("clearBtn"); //Rensa knappen
 
 let activeFetches = 0; // för loader spinner
-window.onload = clear; 
+
 
 //Matchar den sökta aktien med aktierna i Nasdaq
 searchInput.addEventListener("input", function() {
@@ -243,6 +243,7 @@ function stockNews(testNews){
 }
 
 //Funktioner som visar clear knappen vid input och får den att rensa input vid click
+clear();
 function clear(){
     searchInput.addEventListener("input", showClearBtn);
     clearButton.addEventListener("click", clearInput);
