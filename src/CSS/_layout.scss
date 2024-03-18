@@ -175,7 +175,7 @@ p{
 //Footer
 footer{
     background-color: darken(base.$mainColor, 15%);
-    margin-top: 200vh;
+    margin-top: var(--pageHeight);
     height: 5vh;
     padding: 0.5%;
     font-weight: bold;

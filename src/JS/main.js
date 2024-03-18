@@ -265,6 +265,9 @@ function showClearBtn() {
     showClearBtn();
   }
 
-  
+
+  const contentHeight = document.documentElement.scrollHeight;
+  document.querySelector('footer').style.setProperty('--pageHeight', `${contentHeight}px`)
+
   
 
