@@ -30,6 +30,7 @@ header{
     text-align: center;
     h1{
         padding-top: 1%;
+        font-size: 1.5em;
     }
 }
 
@@ -174,7 +175,7 @@ p{
 //Footer
 footer{
     background-color: darken(base.$mainColor, 15%);
-    margin-top: 100%;
+    margin-top: 200vh;
     height: 5vh;
     padding: 0.5%;
     font-weight: bold;
@@ -193,8 +194,14 @@ footer{
     #logo{
         display: none;
     }
+    
     .chart{
-        width: 60%;
+        width: 85%;
+    }
+
+
+    body{
+        font-size: 1em;
     }
 }
 

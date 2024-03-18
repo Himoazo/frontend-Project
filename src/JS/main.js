@@ -132,7 +132,7 @@ new Chart(document.getElementById('priceChart'), {
                     display: true,
                     stepSize: 25, // prisintervall
                     font: {
-                        size: 13,
+                        size: 10,
                         weight: 'bold',
                     },
                 },
@@ -145,7 +145,7 @@ new Chart(document.getElementById('priceChart'), {
             legend: {
                 labels: {
                     font: {
-                        size: 20,
+                        size: 15,
                         weight: 'bolder',
                     },
                 },
